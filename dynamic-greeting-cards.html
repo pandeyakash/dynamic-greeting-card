@@ -3,12 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Template</title>
+    <title>Dynamic Greeting Cards</title>
     <style>
+      /* Container styling: Ensures that the card elements are arranged horizontally and spaced out evenly */
       .container {
         display: flex;
         justify-content: space-around;
       }
+
+      /* Card styling: Basic styling for individual greeting cards, giving them a border, background color, and rounded corners */
       .card {
         border: 1px solid black;
         width: 200px;
@@ -20,36 +23,47 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- React and Babel scripts to enable JSX and React functionality -->
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+      // This is a stateless functional component that accepts two props: 'greeting' and 'name'
+      // It returns a card-like structure with the greeting message and the name
+      const GreetingCard = ({ greeting, name }) => {
+        return (
+          <div className="card">
+            <h2>{greeting}</h2>
+            <h3>{name}</h3>
+          </div>
+        );
+      };
+
+      // Main App component that renders a list of GreetingCards
+      const App = () => {
+        // Array of objects that contain the greeting and name for each card
+        const subject = [
+          { greeting: "Hello", name: "John" },
+          { greeting: "Hi", name: "Jane" },
+          { greeting: "Hey", name: "Bob" },
+        ];
+
+        // Return a container div that maps over the 'subject' array
+        // Each object in the array is passed as props to the GreetingCard component
+        return (
+          <div className="container">
+            {subject.map((ele) => (
+              <GreetingCard greeting={ele.greeting} name={ele.name} />
+            ))}
+          </div>
+        );
+      };
+
+      // Render the App component into the 'root' div in the HTML
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
   </body>
-  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
-  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script type="text/babel">
-    const GreetingCard = ({ greeting, name }) => {
-      return (
-        <div className="card">
-          <h2>{greeting}</h2>
-          <h3>{name}</h3>
-        </div>
-      );
-    };
-
-    const App = () => {
-      const subject = [
-        { greeting: "Hello", name: "John" },
-        { greeting: "Hi", name: "Jane" },
-        { greeting: "Hey", name: "Bob" },
-      ];
-      return (
-        <div className="container">
-          {subject.map((ele) => (
-            <GreetingCard greeting={ele.greeting} name={ele.name} />
-          ))}
-        </div>
-      );
-    };
-
-    const root = ReactDOM.createRoot(document.getElementById("root"));
-    root.render(<App />);
-  </script>
 </html>
